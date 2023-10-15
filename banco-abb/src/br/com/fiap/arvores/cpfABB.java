@@ -66,10 +66,78 @@ public class cpfABB {
         if (comparacao == 0) {
             return p.conta;
         } else if (comparacao < 0) {
-            return consultar(p.esq, cpf); // Buscar na subárvore esquerda.
+            return consultar(p.esq, cpf);
         } else {
-            return consultar(p.dir, cpf); // Buscar na subárvore direita.
+            return consultar(p.dir, cpf);
         }
+    }
+
+    public arvore atualizarSaldo(arvore p, int numeroConta, double saldo) {
+        if (p == null) {
+            return p;
+        }
+
+        if (numeroConta == p.conta.getNumeroConta()) {
+            p.conta.setSaldo(saldo);
+        } else if (numeroConta < p.conta.getNumeroConta()) {
+            p.esq = atualizarSaldo(p.esq, numeroConta, saldo);
+        } else {
+            p.dir = atualizarSaldo(p.dir, numeroConta, saldo);
+        }
+        return p;
+    }
+
+    public int contaNos(arvore p, int cont) {
+
+        if (p != null) {
+            cont += 1;
+            cont = contaNos(p.esq, cont);
+            cont = contaNos(p.dir, cont);
+
+        }
+        return cont;
+    }
+
+    public int contasSaldo(arvore p, int cont, double saldo) {
+
+        if (p != null) {
+            if (p.conta.getSaldo() >= saldo) {
+                cont += 1;
+            }
+            cont = contasSaldo(p.esq, cont, saldo);
+            cont = contasSaldo(p.dir, cont, saldo);
+        }
+        return cont;
+    }
+
+
+    public arvore removerConta(arvore p, int numeroConta) {
+        if (p == null) {
+            return p;
+        }
+
+        if (numeroConta < p.conta.getNumeroConta()) {
+            p.esq = removerConta(p.esq, numeroConta);
+        } else if (numeroConta > p.conta.getNumeroConta()) {
+            p.dir = removerConta(p.dir, numeroConta);
+        } else {
+            if (p.esq == null) {
+                return p.dir;
+            } else if (p.dir == null) {
+                return p.esq;
+            } else {
+                p.conta = menorSaldo(p.dir);
+                p.dir = removerConta(p.dir, p.conta.getNumeroConta());
+            }
+        }
+        return p;
+    }
+
+    private Conta menorSaldo(arvore p) {
+        while (p.esq != null) {
+            p = p.esq;
+        }
+        return p.conta;
     }
 
 

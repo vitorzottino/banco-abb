@@ -72,4 +72,31 @@ public class cnpjABB {
         }
     }
 
+    public arvore atualizarSaldo(arvore p, int numeroConta, double saldo) {
+        if (p == null) {
+            return p;
+        }
+
+        if (numeroConta == p.conta.getNumeroConta()) {
+            p.conta.setSaldo(saldo);
+        } else if (numeroConta < p.conta.getNumeroConta()) {
+            p.esq = atualizarSaldo(p.esq, numeroConta, saldo);
+        } else {
+            p.dir = atualizarSaldo(p.dir, numeroConta, saldo);
+        }
+        return p;
+    }
+
+    public int contaNos(arvore p, int cont) {
+
+        if (p != null) {
+            cont += 1;
+            cont = contaNos(p.esq, cont);
+            cont = contaNos(p.dir, cont);
+
+        }
+        return cont;
+    }
+
+
 }

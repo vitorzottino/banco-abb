@@ -101,37 +101,64 @@ public class App {
                     System.out.println("3- Total de clientes");
                     System.out.println("4- Total de clientes com saldo");
                     System.out.println("0- Voltar ao menu principal");
-                    switch (input.nextInt()){
+                    switch (input.nextInt()) {
                         case 1:
                             System.out.println("Qual o tipo da conta? \n1- CPF 2-CNPJ");
-                            if(input.nextInt() == 1) {
+                            if (input.nextInt() == 1) {
                                 System.out.println("Informe o CPF a ser consultado");
                                 Conta c = arvoreCPF.consultar(arvoreCPF.root, input.next());
-                                if(c == null){
+                                if (c == null) {
                                     System.out.println("CPF nao foi encontrado em nossa base de dados");
-                                }else{
+                                } else {
                                     System.out.println(c.toString());
                                 }
 
-                            }else{
+                            } else {
                                 System.out.println("Informe o CNPJ a ser consultado");
                                 Conta c = arvoreCNPJ.consultar(arvoreCNPJ.root, input.next());
-                                if(c == null){
+                                if (c == null) {
                                     System.out.println("CNPJ nao foi encontrado em nossa base de dados");
-                                }else{
+                                } else {
                                     System.out.println(c.toString());
                                 }
 
                             }
                             break;
-
                         case 2:
+                            System.out.println("Qual o tipo da conta? \n1- CPF 2- CNPJ");
+                            if (input.nextInt() == 1) {
+                                System.out.println("Informe o numero da conta a ser atualizada");
+                                int num = input.nextInt();
+                                System.out.println("Informe o novo saldo");
+                                double sal = input.nextDouble();
+                                arvoreCPF.atualizarSaldo(arvoreCPF.root, num, sal);
+                            } else {
+                                System.out.println("Informe o numero da conta a ser atualizada");
+                                int num = input.nextInt();
+                                System.out.println("Informe o novo saldo");
+                                double sal = input.nextDouble();
+                                arvoreCNPJ.atualizarSaldo(arvoreCNPJ.root, num, sal);
+                            }
                             break;
 
                         case 3:
+                            System.out.println("Qual o tipo da conta? \n1- CPF 2- CNPJ");
+                            if (input.nextInt() == 1) {
+                                System.out.println("Total de contas CPF cadastradas: " + arvoreCPF.contaNos(arvoreCPF.root, 0));
+                            }else{
+                                System.out.println("Total de contas CNPJ cadastradas: " + arvoreCNPJ.contaNos(arvoreCNPJ.root, 0));
+                            }
                             break;
 
                         case 4:
+                            System.out.println("Informe o salario");
+                            double sal = input.nextInt();
+                            System.out.println("Qual o tipo da conta? \n1- CPF 2- CNPJ");
+                            if (input.nextInt() == 1) {
+                                System.out.println("Total de contas CPF cadastradas: " + arvoreCPF.contasSaldo(arvoreCPF.root, 0, sal));
+                            }else{
+                                System.out.println("Total de contas CNPJ cadastradas: " + arvoreCNPJ.contaNos(arvoreCNPJ.root, 0));
+                            }
                             break;
 
                         case 0:
