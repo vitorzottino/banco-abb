@@ -5,6 +5,7 @@ import br.com.fiap.arvores.cpfABB;
 import br.com.fiap.model.Cliente;
 import br.com.fiap.model.Conta;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -61,9 +62,9 @@ public class App {
                     }
                     break;
                 case 2:
-                    System.out.print("Qual tipo de conta a oferta se destina ? ");
+                    System.out.println("Qual tipo de conta a oferta se destina ? ");
                     do {
-                        System.out.print("Digite 1- Pessoa Física 2- Pessoa Jurídica:");
+                        System.out.println("1- Pessoa Física 2- Pessoa Jurídica:");
                         op = input.nextInt();
                         switch (op) {
                             case 1:
@@ -80,25 +81,34 @@ public class App {
                     System.out.print("Qual o valor de saldo mínimo exigido:R$");
                     saldo = input.nextDouble();
                     if (tipoConta.equals("Fisica")) {
-                        Conta c = arvoreCPF.oferecerOferta(arvoreCPF.root, saldo);
-                        System.out.println("Cliente que recebeu a oferta" + c);
-                        System.out.println("Deseja aceitar a oferta ? \n1- Sim 2- Não");
-                        if (input.nextInt() == 1){
-                            arvoreCPF.remover(arvoreCPF.root, c.getNumeroConta());
-                            System.out.println("Cliente removido da arvore");
-                        }else {
-                            System.out.println("Cliente permanece na arvore");
+                        List<Conta> contas = new ArrayList<>();
+                        contas = arvoreCPF.listarContas(arvoreCPF.root, saldo, contas);
+                        for (Conta c : contas) {
+                            System.out.println(c.getNome() + " Deseja aceitar a oferta ? \n1- Sim 2- Não");
+                            if (input.nextInt() == 1) {
+                                arvoreCPF.remover(arvoreCPF.root, c.getNumeroConta());
+                                System.out.println(c.getNome() + " removido da arvore");
+                            } else {
+                                System.out.println("Proximo cliente");
+                            }
+
                         }
+                        System.out.println("Fim da lista de clientes validos para a oferta");
                     } else {
-                        Conta c = arvoreCNPJ.oferecerOferta(arvoreCNPJ.root, saldo);
-                        System.out.println("Cliente que recebeu a oferta" + c);
-                        System.out.println("Deseja aceitar a oferta ? \n1- Sim 2- Não");
-                        if (input.nextInt() == 1){
-                            arvoreCNPJ.remover(arvoreCNPJ.root, c.getNumeroConta());
-                            System.out.println("Cliente removido da arvore");
-                        }else {
-                            System.out.println("Cliente permanece na arvore");
+                        List<Conta> contas = new ArrayList<>();
+                        contas = arvoreCNPJ.listarContas(arvoreCNPJ.root, saldo, contas);
+                        for (Conta c : contas) {
+                            System.out.println(c.getNome() + " Deseja aceitar a oferta ? \n1- Sim 2- Não");
+                            if (input.nextInt() == 1) {
+                                arvoreCNPJ.remover(arvoreCNPJ.root, c.getNumeroConta());
+                                System.out.println(c.getNome() + " removido da arvore");
+                            } else {
+                                System.out.println("Proximo cliente");
+                            }
+
                         }
+                        System.out.println("Fim da lista de clientes validos para a oferta");
+
 
                     }
                     break;
@@ -174,7 +184,11 @@ public class App {
                     break;
                 case 4:
                     System.out.println("Lista CPF");
-                    arvoreCPF.listarEmOrdem(arvoreCPF.root);
+                    List<Conta> teste = new ArrayList<>();
+                    teste = arvoreCPF.listarContas(arvoreCPF.root, 0, teste);
+                    for (Conta c : teste) {
+                        System.out.println(c);
+                    }
                     System.out.println("Lista CNPJ");
                     arvoreCNPJ.listarEmOrdem(arvoreCNPJ.root);
                     break;

@@ -2,6 +2,9 @@ package br.com.fiap.arvores;
 
 import br.com.fiap.model.Conta;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class cpfABB {
 
     private static class arvore {
@@ -86,28 +89,6 @@ public class cpfABB {
         return cont;
     }
 
-    public Conta oferecerOferta(arvore p, double saldoMinimo) {
-        Conta conta = null;
-        if (p != null) {
-            Conta contaEsq = oferecerOferta(p.esq, saldoMinimo);
-            if (contaEsq != null && contaEsq.getSaldo() > saldoMinimo &&
-                    (conta == null || contaEsq.getSaldo() > conta.getSaldo())) {
-                conta = contaEsq;
-            }
-            if (p.conta.getSaldo() > saldoMinimo &&
-                    (conta == null || p.conta.getSaldo() > conta.getSaldo())) {
-                conta = p.conta;
-            }
-            Conta contaDir = oferecerOferta(p.dir, saldoMinimo);
-
-            if (contaDir != null && contaDir.getSaldo() > saldoMinimo &&
-                    (conta == null || contaDir.getSaldo() > conta.getSaldo())) {
-                conta = contaDir;
-            }
-        }
-        return conta;
-    }
-
     public arvore remover(arvore p, int numeroConta) {
         if (p == null) {
             return p;
@@ -141,6 +122,23 @@ public class cpfABB {
         }
         return conta;
     }
+
+    public List<Conta> listarContas(arvore p, double saldo, List<Conta> contas) {
+        if (p != null) {
+            contas = listarContas(p.esq, saldo, contas);
+            if (p.conta.getSaldo() >= saldo) {
+                int i = 0;
+                while (i < contas.size() && p.conta.getSaldo() < contas.get(i).getSaldo()) {
+                    i++;
+                }
+                contas.add(i, p.conta);
+            }
+            contas = listarContas(p.dir, saldo, contas);
+
+        }
+        return contas;
+    }
+
 
 
 }

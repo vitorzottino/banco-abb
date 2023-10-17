@@ -39,6 +39,10 @@ public class Conta {
     public String getCpfCnpj(){
         return this.cliente.getCpfCnpj();
     }
+
+    public String getNome(){
+        return this.cliente.getNome();
+    }
     @Override
     public String toString() {
         return "Conta{" +
