@@ -49,8 +49,8 @@ public class App {
                                 conta.setTipoConta(tipoConta);
                                 break;
                             case 2:
-                                conta.setTipoConta(tipoConta);
                                 tipoConta = "Juridica";
+                                conta.setTipoConta(tipoConta);
                                 break;
                             default:
                                 System.out.println("Opção inválida ");
@@ -92,7 +92,7 @@ public class App {
                         for (Conta c : contas) {
                             System.out.println(c.getNome() + " Deseja aceitar a oferta ? \n1- Sim 2- Não");
                             if (input.nextInt() == 1) {
-                                arvoreCPF.remover(arvoreCPF.root, c.getNumeroConta());
+                                arvoreCPF.root = arvoreCPF.remover(arvoreCPF.root, c.getNumeroConta());
                                 System.out.println(c.getNome() + " removido da arvore");
                             } else {
                                 System.out.println("Proximo cliente");
@@ -106,7 +106,7 @@ public class App {
                         for (Conta c : contas) {
                             System.out.println(c.getNome() + " Deseja aceitar a oferta ? \n1- Sim 2- Não");
                             if (input.nextInt() == 1) {
-                                arvoreCNPJ.remover(arvoreCNPJ.root, c.getNumeroConta());
+                                arvoreCNPJ.root = arvoreCNPJ.remover(arvoreCNPJ.root, c.getNumeroConta());
                                 System.out.println(c.getNome() + " removido da arvore");
                             } else {
                                 System.out.println("Proximo cliente");
